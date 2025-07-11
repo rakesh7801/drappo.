@@ -3,9 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import { doctors } from "../assets/asset";
 import { useNavigate } from "react-router-dom";
 
-
-
-
 const Appointment = () => {
   const { docId } = useParams();
   const doctor = doctors.find((doc) => doc._id === docId);

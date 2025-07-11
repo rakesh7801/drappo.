@@ -2,7 +2,7 @@ import React from "react";
 
 const MyAppontment = () => {
   return <div>
-    <h1>hello world</h1>
+    <h1>My Appointments</h1>
   </div>;
 };
 

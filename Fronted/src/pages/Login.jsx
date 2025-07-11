@@ -1,17 +1,17 @@
+
 import React, { useState } from 'react';
 import heroImg from "../assets/header_img.png";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-
-
-
+import { useDispatch } from 'react-redux'; // 👈 Add this
+import { setUser } from '../redux/authSlice'; // 👈 Add this
+import google from "../assets/google.png"
+import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 const Login = () => {
- 
+  const dispatch = useDispatch();
   
   const navigate = useNavigate();
-
 
   const [formData, setformData] = useState({
     email: "",
@@ -31,21 +31,28 @@ const Login = () => {
       const res = await axios.post('http://localhost:8000/users/login', formData, {
         withCredentials: true
       });
-      console.log("user login:", res.data);
+      
+      
+      
+      const { AccessToken, user } = res.data.data;
+      
+      localStorage.setItem("token", AccessToken);
+      dispatch(setUser(user)); 
+      
+      console.log("✅ User set in Redux:", user); 
+      
 
-     
-
-      alert("user login successfully");
+      alert("User login successful");
       navigate("/my-profile");
-	
     } catch (err) {
       console.log("Login failed:", err);
     }
   };
+  
 
   return (
     <div className='ml-96'>
-      <div className="w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-400 dark:text-gray-800">
+      <div className="w-[600px] max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-400 dark:text-gray-800 ">
         <h1 className="text-2xl font-bold text-center">Login</h1>
         <form noValidate onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-1 text-sm">
@@ -71,21 +78,30 @@ const Login = () => {
               onChange={handlechange}
               className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600"
             />
-            <div className="flex justify-end text-xs dark:text-gray-600">
+            <div className="flex justify-end text-xs mt-14 font-bold dark:text-gray-600">
               <a href="#">Forgot Password?</a>
             </div>
           </div>
-          <button className="block w-full p-3 text-center rounded-sm dark:text-gray-50 dark:bg-violet-600">Sign in</button>
+          <button className="block w-full p-3 text-center rounded-2xl dark:text-gray-50 dark:bg-violet-600">Sign in</button>
         </form>
 
-        <p className="text-xs text-center sm:px-6 dark:text-gray-600">Don't have an account? 
+        <p className="  text-center mt-10 sm:px-6 dark:text-black">Don't have an account? 
           <Link
             to="/register"
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-indigo-300 transition ml-2"
+            className="bg-cyan-700 text-white px-4 py-2 rounded-2xl hover:bg-indigo-300 transition ml-2"
           >
             Sign Up
           </Link>
+            
         </p>
+        <small className="capitalize flex justify-items-center items-center font-bold ml-36 mt-4 ">or login with</small>
+        <div className=' justify-items-center items-center'>
+        <button onClick={() => loginWithRedirect()}
+     className="w-[250px] flex mt-6  justify-center items-center gap-2 py-3 rounded-md bg-red-500 text-white hover:bg-red-800 duration-300">Login with Google <FaGoogle/> </button>
+
+        <button className="w-[250px] mt-3 flex  justify-center items-center gap-2 py-3 rounded-md bg-blue-500 text-white hover:bg-blue-800 duration-300">Login with Facebook <FaFacebook/> </button>
+
+        </div>
       </div>
     </div>
   );

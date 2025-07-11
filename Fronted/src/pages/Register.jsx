@@ -13,10 +13,7 @@ function Register() {
     password: '',
     
   });
-
-//  const handleChanges = (e) =>{
-//   setselectedfile(e.target.files[0])
-//  }
+  
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -26,6 +23,7 @@ function Register() {
      
     }));
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,14 +33,17 @@ function Register() {
       alert(`Registration Successfuly`)
       navigate("/login")
 
-      //navigate("/");
-      // success message ya redirect yahan likh sakta hai
+     
     } catch (err) {
       console.error('Error registering:', err.response?.data || err.message);
     }
   };
+  
   return (
+    <div>
+      
     <div className="w-full mr-80 max-w-md mx-auto items-center p-8 space-y-3 rounded-xl dark:bg-gray-400 dark:text-gray-800">
+      
       <h1 className="text-2xl font-bold text-center">Register</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
        
@@ -99,6 +100,7 @@ function Register() {
           </Link>
         </p>
       </form>
+    </div>
     </div>
   );
 }
