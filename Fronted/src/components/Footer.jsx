@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from "../assets/logo.svg";
+import {NavLink} from "react-router-dom"
 
 const Footer = () => {
   return (
@@ -14,8 +15,13 @@ const Footer = () => {
 <div>
 <p className='text-xl font-medium mb-5'>COMPANY</p>
 <ul className='flex flex-col gap-2 text-gray-600'>
+   
+   <NavLink to="/" className={({isActive}) =>`${isActive ? "text-orange-700" : "text-gray-400"}`}>
     <li>Home</li>
+    </NavLink>
+    <NavLink to="/about" className={({isActive}) =>`${isActive ? "text-orange-700" : "text-gray-400"}`}>
     <li>About us</li>
+    </NavLink>
     <li>Delivery</li>
     <li>Privacy policy</li>
 </ul>
